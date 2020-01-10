@@ -532,6 +532,8 @@ def compute_predictions_logits(
         logger.info('Diagnose nbest assignment, print total scores and best entry score')            
         logger.info(total_scores)   
         logger.info(best_non_null_entry.start_logit + best_non_null_entry.end_logit)
+        mypreds= [entry.text for entry in nbest]
+        logger.info(mypreds)
         logger.info(best_non_null_entry.text)
                     
         try:
