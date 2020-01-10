@@ -529,10 +529,15 @@ def compute_predictions_logits(
             if not best_non_null_entry:
                 if entry.text:
                     best_non_null_entry = entry
+        logger.info('Diagnose nbest assignment, print total scores and best entry score')            
+        logger.info(total_scores)   
+        logger.info(best_non_null_entry.start_logit + best_non_null_entry.end_logit)
+        logger.info(best_non_null_entry.text)
                     
         try:
             xvar = best_non_null_entry.end_logit
         except:
+            logger.info('Failed to assign best entry')
             logger.info(total_scores)
             logger.info(len(nbest))
 
