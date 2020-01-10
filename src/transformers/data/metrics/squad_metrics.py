@@ -209,6 +209,7 @@ def find_all_best_thresh(main_eval, preds, exact_raw, f1_raw, na_probs, qid_to_h
 
 
 def squad_evaluate(examples, preds, no_answer_probs=None, no_answer_probability_threshold=1.0):
+    logger.info('Evaluation method active')
     qas_id_to_has_answer = {example.qas_id: bool(example.answers) for example in examples}
     has_answer_qids = [qas_id for qas_id, has_answer in qas_id_to_has_answer.items() if has_answer]
     no_answer_qids = [qas_id for qas_id, has_answer in qas_id_to_has_answer.items() if not has_answer]
