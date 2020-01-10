@@ -546,10 +546,18 @@ def compute_predictions_logits(
         if not version_2_with_negative:
             all_predictions[example.qas_id] = nbest_json[0]["text"]
         else:
-            logger.info("start logit {} .. end logit {}, Batch {} from {}, threshold {}".format(best_non_null_entry.start_logit, best_non_null_entry.end_logit,example_index, len(all_examples),null_score_diff_threshold))
-            
+            try:
+                xvar = best_non_null_entry.end_logit
+            catch:
+                logger.info("Batch {} from {}, threshold {}".format(example_index, len(all_examples),null_score_diff_threshold))
+            try:
+                
             # predict "" iff the null score - the score of best non-null > threshold
-            score_diff = score_null - best_non_null_entry.start_logit - (best_non_null_entry.end_logit)
+                score_diff = score_null - best_non_null_entry.start_logit - (best_non_null_entry.end_logit)
+            catch:
+                logger.info('Unable to access best non null entry. predicting anyway.')
+                score_diff = 0
+                
             scores_diff_json[example.qas_id] = score_diff
             if score_diff > null_score_diff_threshold:
                 all_predictions[example.qas_id] = ""
