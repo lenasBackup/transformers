@@ -530,11 +530,11 @@ def compute_predictions_logits(
                 if entry.text:
                     best_non_null_entry = entry
                     
-        logger.info(total_scores)   
-        logger.info(best_non_null_entry.start_logit + best_non_null_entry.end_logit)
-        mypreds= [entry.text for entry in nbest]
-        logger.info(mypreds)
-        logger.info(best_non_null_entry.text)
+        #logger.info(total_scores)   
+        #logger.info(best_non_null_entry.start_logit + best_non_null_entry.end_logit)
+        #mypreds= [entry.text for entry in nbest]
+        #logger.info(mypreds)
+        #logger.info(best_non_null_entry.text)
                     
         try:
             xvar = best_non_null_entry.end_logit
@@ -544,6 +544,9 @@ def compute_predictions_logits(
             logger.info(len(nbest))
             mypreds= [entry.text for entry in nbest]
             logger.info(mypreds)
+            best_non_null_entry = _NbestPrediction(text="empty", start_logit=0.0, end_logit=0.0)
+            logger.info('Added catch nbest')
+            
 
         probs = _compute_softmax(total_scores)
 
