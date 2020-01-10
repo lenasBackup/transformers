@@ -529,6 +529,12 @@ def compute_predictions_logits(
             if not best_non_null_entry:
                 if entry.text:
                     best_non_null_entry = entry
+                    
+        try:
+            xvar = best_non_null_entry.end_logit
+        except:
+            logger.info(total_scores)
+            logger.info(len(nbest))
 
         probs = _compute_softmax(total_scores)
 
