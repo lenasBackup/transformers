@@ -548,13 +548,13 @@ def compute_predictions_logits(
         else:
             try:
                 xvar = best_non_null_entry.end_logit
-            catch:
+            except:
                 logger.info("Batch {} from {}, threshold {}".format(example_index, len(all_examples),null_score_diff_threshold))
             try:
                 
             # predict "" iff the null score - the score of best non-null > threshold
                 score_diff = score_null - best_non_null_entry.start_logit - (best_non_null_entry.end_logit)
-            catch:
+            except:
                 logger.info('Unable to access best non null entry. predicting anyway.')
                 score_diff = 0
                 
