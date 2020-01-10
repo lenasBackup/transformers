@@ -481,7 +481,7 @@ def compute_predictions_logits(
                 feature = features[pred.feature_index]
             except:
                 logger.info('>>>>>> Too many features, using emplty prediction instead')
-                logger.info(len(features)')
+                logger.info(len(features))
                 feature = features[0]
                 
             if pred.start_index > 0:  # this is a non-null prediction
