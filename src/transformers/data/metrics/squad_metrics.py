@@ -430,6 +430,7 @@ def compute_predictions_logits(
                     # We could hypothetically create invalid predictions, e.g., predict
                     # that the start of the span is in the question. We throw out all
                     # invalid predictions.
+
                     if start_index >= len(feature.tokens):
                         continue
                     if end_index >= len(feature.tokens):
@@ -475,7 +476,14 @@ def compute_predictions_logits(
         for pred in prelim_predictions:
             if len(nbest) >= n_best_size:
                 break
-            feature = features[pred.feature_index]
+            try:
+                
+                feature = features[pred.feature_index]
+            except:
+                logger.info('>>>>>> Too many features, using emplty prediction instead')
+                logger.info(len(features)')
+                feature = features[0]
+                
             if pred.start_index > 0:  # this is a non-null prediction
                 tok_tokens = feature.tokens[pred.start_index : (pred.end_index + 1)]
                 orig_doc_start = feature.token_to_orig_map[pred.start_index]
@@ -540,6 +548,7 @@ def compute_predictions_logits(
             xvar = best_non_null_entry.end_logit
         except:
             logger.info('Failed to assign best entry')
+            logger.info("Batch {} from {}, threshold {}".format(example_index, len(all_examples),null_score_diff_threshold))
             logger.info(total_scores)
             logger.info(len(nbest))
             mypreds= [entry.text for entry in nbest]
