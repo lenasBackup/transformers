@@ -480,9 +480,10 @@ def compute_predictions_logits(
                 
                 feature = features[pred.feature_index]
             except:
-                logger.info('>>>>>> Too many features, using emplty prediction instead')
+                logger.info('>>>>>> Too many features, using last prediction instead')
+                logger.info("Batch {} from {}".format(example_index, len(all_examples)))
                 logger.info(len(features))
-                feature = features[0]
+                feature = features[pred.feature_index -1]
                 
             if pred.start_index > 0:  # this is a non-null prediction
                 tok_tokens = feature.tokens[pred.start_index : (pred.end_index + 1)]
